@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+[type='number']::-webkit-inner-spin-button,
+[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+[type='number'] {
+  -moz-appearance: textfield;
+}
+
+@media  print {
+  body * {
+    visibility: hidden; /* on cache tout */
+  }
+  .print-area, .print-area * {
+    visibility: visible; /* sauf la facture */
+  }
+  .print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%; /* occupe toute la largeur A4 */
+  }
+  .no-print {
+    display: none !important; /* cache boutons Fermer / Imprimer */
+  }
+  
+}
