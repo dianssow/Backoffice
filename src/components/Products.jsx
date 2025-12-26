@@ -291,11 +291,21 @@ const toggleFeatured = async (productId, currentStatus) => {
                {currentProducts.map((product, index) => (
                     <tr  key={product.id || index}>
                         <td className="border items-center justify-center border-gray-200 p-1">{startIndex + index + 1}</td>
-                        <td className="border flex justify-center border-gray-200 p-2">
-                            {product.image ? (  <img src={`${import.meta.env.VITE_API_URL}/${product.image}`} alt={product.name} className="w-11 h-10 rounded-4xl object-cover" />) : (
-                                "-"
-                            )}
-                        </td>
+                      <td className="border flex justify-center border-gray-200 p-2">
+                          {product.image ? (
+                              <img 
+                                  src={
+                                      product.image.startsWith('data:') 
+                                      ? product.image 
+                                      : `${import.meta.env.VITE_API_URL}/${product.image}`
+                                  } 
+                                  alt={product.name} 
+                                  className="w-11 h-10 rounded-4xl object-cover" 
+                              />
+                          ) : (
+                              "-"
+                          )}
+                      </td>
                         <td className="border border-gray-200 p-2">{product.name}</td>
                         <td className="border border-gray-200 p-2">
                             <span>
@@ -424,6 +434,7 @@ const toggleFeatured = async (productId, currentStatus) => {
                   // onChange={handleChange}
                   type="number"
                   placeholder="Prix limite"
+                  disabled
                   className="w-[50%] text-white font-bold border p-1 rounded px-4 focus:outline-none focus:ring-0 "
                 />
                 </div>
@@ -438,9 +449,10 @@ const toggleFeatured = async (productId, currentStatus) => {
                   className="w-[50%] text-white font-bold border  mr-1 p-1 rounded px-4 focus:outline-none focus:ring-0 "
                   />
                 <input
-                  name="wholesalePrice"
+                  // name="wholesalePrice"
                   // value={formData.wholesalePrice}
                   // onChange={handleChange}
+                  disabled
                   type="number"
                   placeholder="Prix limite"
                   className="w-[50%] text-white font-bold border p-1 rounded px-4 focus:outline-none focus:ring-0 "

@@ -32,7 +32,7 @@ function Invoice({ sale,customer, onClose }) {
           <div className="border  border-gray-300 rounded-md p-4  w-1/2 bg-gray-50">
             <p className="text-2xl font-extrabold">{customer?.name || "-"}</p>
             <p><strong>Adresse :</strong> {customer?.address || "-"}</p>
-            <p><strong>Téléphone :</strong> {customer?.phone || "-"}</p>
+            <p><strong>Téléphone :</strong> {customer?.number || "-"}</p>
           </div>
           </div>
 

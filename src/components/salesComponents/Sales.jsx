@@ -29,15 +29,29 @@ function Sales() {
 
    
 
-    const fetchSales = async () => {
+const fetchSales = async () => {
+      
+              if(!token){
+                console.warn("Pas de token detecté pour linstant");
+                
+              }
       try {
+        console.log("Envoi de la requete");
+        
                  const response = await api.get(`/api/sale`, {
             headers: {
                 Authorization: `Bearer ${token}`
                   } 
                 })
 
-               const salesData = response.data.sales
+                console.log("Reponse brute du serveur");
+                
+
+               const salesData = response.data.sales || response.data
+               if(!Array.isArray(salesData)){
+                console.error("SalesData nest pas un tableau ", salesData);
+                return
+               }
                const current = salesData.filter(sale => sale.shift?.status === "OPEN")
                const closed = salesData
                .filter(sale => sale.shift?.status === "CLOSED")

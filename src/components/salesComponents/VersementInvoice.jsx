@@ -2,7 +2,7 @@ function VersementInvoice({ versement,customer, onClose, }) {
 
   if (!versement) return null
 
-  const formatDateTime = (dateString) => {
+  const formatDate= (dateString) => {
     const date = new Date(dateString)
     return date.toLocaleString("fr-FR", {
       dateStyle: "short",
@@ -20,25 +20,23 @@ function VersementInvoice({ versement,customer, onClose, }) {
             <p className=" font-medium">COSA <br/> COMMUNE DE LAMBANYI</p>
             <p>00224 623 75 23 44</p>
          </div>      
-                       {/* Facture et infos client */}
         </div>
           <div className="flex justify-between  items-start mb-8">
            <div className="text-center">
             <h2 className="text-3xl font-bold uppercase">Versement</h2>
             <p className="text-gray-600 mt-2">
-            Type : {versement.paymentType} | Date : {formatDateTime(versement.date)}
+             Date : {formatDate(versement.createdAt)}
             </p>
             <p>N°: {versement.versementNumber} </p>
         </div>
           <div className="border  border-gray-300 rounded-md p-4  w-1/2 bg-gray-50">
-            <p className="text-2xl font-extrabold">{versement.customerId?.name || "-"}</p>
-            <p><strong>Adresse :</strong> {versement.customerId?.address || "-"}</p>
-            <p><strong>Téléphone :</strong> {versement.customerId?.number || "-"}</p>
+            <p className="text-2xl font-extrabold">{versement.customer?.name || "-"}</p>
+            <p><strong>Adresse :</strong> {versement.customer?.address || "-"}</p>
+            <p><strong>Téléphone :</strong> {versement.customer?.number || "-"}</p>
           </div>
           </div>
 
           
-        {/* MONTANT + BALANCE */}
         <div className="text-center mb-10">
         
         <table className="w-full border-collapse border border-gray-400 mb-10 text-sm">
@@ -53,7 +51,7 @@ function VersementInvoice({ versement,customer, onClose, }) {
             <tr>
               <td className="border-r border-gray-400 p-2 ">VERSEMENT</td>
               <td className="border-r border-gray-400 p-2 ">{versement.amount.toLocaleString("fr-FR")} GNF</td>
-              <td className="border-r border-gray-400 p-2 w-2/4 ">{versement.motif}</td>
+              <td className="border-r border-gray-400 p-2 w-2/4 ">{versement.motif || "--"}</td>
             </tr>
           </tbody>
         </table>
@@ -67,7 +65,6 @@ function VersementInvoice({ versement,customer, onClose, }) {
           </div>
         </div>
 
-        {/* Imprimer */}
         <div className="flex bg-white justify-between mt-6  bottom-0 py-4 no-print">
           <button
             onClick={onClose}

@@ -60,18 +60,24 @@ function Versements() {
                   } 
                 })
 
-               const versementsData = response.data.versements
-               const current = versementsData.filter(versement => versement.shiftId?.status === "OPEN")
-               const closed = versementsData
-               .filter(versement => versement.shiftId?.status === "CLOSED")
-               .reduce((acc, versement) => {
-              const sid = versement.shiftId?.id || "Sans Session"
-          if (!acc[sid]) acc[sid] = { shift: versement.shiftId, versements: [] }
-               acc[sid].versements.push(versement)
-            return acc 
-           }, {})
-        setCurrentSessionVersements(current);
-        setClosedSessions(Object.values(closed))
+              const versementsData = response.data.versements
+
+              const current = versementsData.filter(
+                versement => versement.shift?.status === "OPEN"
+              )
+
+              const closed = versementsData
+                .filter(versement => versement.shift?.status === "CLOSED")
+                .reduce((acc, versement) => {
+                  const sid = versement.shift?.id || "Sans Session"
+                  if (!acc[sid]) acc[sid] = { shift: versement.shift, versements: [] }
+                  acc[sid].versements.push(versement)
+                  return acc
+                }, {})
+
+              setCurrentSessionVersements(current)
+              setClosedSessions(Object.values(closed))
+
         
 
             } catch (error) {
@@ -85,14 +91,14 @@ function Versements() {
      }, [token])          
 
      const filteredCurrentVersements = currentSessionVersements.filter((versement) =>
-  versement.customerId?.name?.toLowerCase().includes(searchTerm.toLowerCase())
+  versement.customer?.name?.toLowerCase().includes(searchTerm.toLowerCase())
 )
 
 const filteredClosedSessions = closedSessions
   .map(session => ({
     ...session,
     versements: session.versements.filter(versement =>
-      versement.customerId?.name?.toLowerCase().includes(searchTerm)
+      versement.customer?.name?.toLowerCase().includes(searchTerm)
     )
   }))
   .filter(session => session.versements.length > 0)
@@ -197,16 +203,16 @@ const filteredClosedSessions = closedSessions
                  {filteredCurrentVersements.map((versement ) => (
                     <tr  key={versement.id}>
                         <td className="border items-center justify-center  p-1">{versement.versementNumber} </td>
-                        <td className="border p-2">{versement.customerId?.name || "-"}</td>
-                        <td className="border p-2">{versement.customerId?.address || "-"} </td>
+                        <td className="border p-2">{versement.customer?.name || "-"}</td>
+                        <td className="border p-2">{versement.customer?.address || "-"} </td>
                         <td className="border p-2">{formatDate(versement.createdAt)}</td>
-                        <td className="border p-2">{versement.userId?.name || "-"}</td>
+                        <td className="border p-2">{versement.user?.name || "-"}</td>
                         <td className="border p-2">{versement.amount.toLocaleString()}</td>
                         <td className="border p-2">{versement.motif}</td>
                         <td className="border p-2" >
                             <div className="flex flex-wrap gap-3 justify-end">
                             <button
-                            onClick={() => setSelectedClient(versement.customerId)}
+                            onClick={() => setSelectedClient(versement.customer)}
                             className="px-3 py-1 bg-green-600 rounded hover:bg-green-700">Visionner</button>
                             <button
                             // onClick={() => askDelete(versement)}
@@ -233,7 +239,7 @@ const filteredClosedSessions = closedSessions
               >
                 Session {formatDate(session.shift.openedAt)}
                                                          {" au "}
-                          {formatDate(session.shift.closedAt)} par {session.shift.userId?.name} - {session.versements.length} versements - Total: {totalSession.toLocaleString("fr-FR")}
+                          {formatDate(session.shift.closedAt)} par {session.shift.user?.name} - {session.versements.length} versements - Total: {totalSession.toLocaleString("fr-FR")}
               </h3>
           
         {expandedSessionId === session.shift.id && (
@@ -255,16 +261,16 @@ const filteredClosedSessions = closedSessions
                  {session.versements.map((versement, index) => (
                     <tr  key={versement.id}>
                         <td className="border items-center justify-center p-1">{versement.versementNumber} </td>
-                        <td className="border p-2">{versement.customerId?.name || "-"}</td>
-                        <td className="border p-2">{versement.customerId?.address || "-"} </td>
+                        <td className="border p-2">{versement.customer?.name || "-"}</td>
+                        <td className="border p-2">{versement.customer?.address || "-"} </td>
                         <td className="border p-2">{versement.amount}</td>
-                        <td className="border p-2">{versement.userId?.name}</td>
+                        <td className="border p-2">{versement.user?.name}</td>
                         <td className="border p-2">{formatDate(versement.createdAt)}</td>
                         <td className="border p-2">{versement.motif}</td>
                         <td className="border p-2" >
                             <div className="flex flex-wrap gap-3 justify-end">
                             <button
-                            onClick={() => setSelectedClient(versement.customerId)}
+                            onClick={() => setSelectedClient(versement.customer)}
                             className="px-3 py-1 bg-green-600 rounded hover:bg-green-700">Visionner</button>
                             <button
                             // onClick={() => askDelete(versement)}

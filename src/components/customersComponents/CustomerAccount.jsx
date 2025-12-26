@@ -178,7 +178,7 @@ const totalPagesVersements = Math.ceil(versements.length / limit)
            <th className="border p-2">Date</th>
            <th className="border p-2">Paiement</th>
            <th className="border p-2">Total</th>
-           <th className="border p-2">Versement</th>
+           <th className="border p-2">Avance</th>
            <th className="border p-2">Reste</th>
            <th className="border p-2">Action</th>
          </tr>
@@ -192,12 +192,14 @@ const totalPagesVersements = Math.ceil(versements.length / limit)
               <td className="border p-2">{sale.givenAmount.toLocaleString('fr-FR')}</td>
               <td className="border p-2">{sale.reste.toLocaleString('fr-FR')}</td>
               <td className="border p-2">
+                <div className="flex flex-wrap gap-3 justify-center">
                 <button 
                 onClick={() => setSelectedSale(sale)}
-                  className="px-3 py-1 bg-green-500 rounded hover:bg-green-600"
+                  className="px-3 py-1 justify-center items-center bg-green-500 rounded hover:bg-green-600"
                 >
                   Afficher                
                 </button>
+                </div>
                 </td>
             </tr>
           ))}
@@ -213,14 +215,12 @@ const totalPagesVersements = Math.ceil(versements.length / limit)
 
      {activeTab === "versements" && (
       <div>
+       <h3 className="text-xl font-semibold mb-2">Historique des Versements:</h3>
           <table className=" w-full border-collapse border border-gray-300 ">
                 <thead>
                     <tr className="bg-gray-200">
                         <th  className="w-2 border  p-2">N°</th>
-                        <th className=" border  p-2">Nom du Client</th>
-                        <th className=" border  p-2">Adresse </th>
                         <th className=" border  p-2">Date</th>
-                        <th className=" border  p-2">Caissier</th>
                         <th className=" border  p-2">Montant</th>
                         <th className="  border  p-2">Motif</th>
                         <th className="  border  p-2">Action</th>
@@ -231,17 +231,14 @@ const totalPagesVersements = Math.ceil(versements.length / limit)
                 { currentVersements.map((versement) => (
                     <tr  key={versement.id}>
                         <td className="border items-center justify-center p-1">{versement.versementNumber} </td>
-                        <td className="border p-2">{versement.customerId?.name || "-"}</td>
-                        <td className="border p-2">{versement.customerId?.address || "-"} </td>
                         <td className="border p-2">{formatDate(versement.createdAt)}</td>
-                        <td className="border p-2">{versement.userId?.name}</td>
-                        <td className="border p-2">{versement.amount}</td>
-                        <td className="border p-2">{versement.motif}</td>
+                        <td className="border p-2 ">{versement.amount.toLocaleString('fr-FR')}</td>
+                        <td className="border p-2 text-center">{versement.motif}</td>
                         <td className="border p-2" >
-                            <div className="flex flex-wrap gap-3 justify-end">
+                            <div className="flex flex-wrap gap-3 justify-center">
                             <button
                             onClick={() => setSelectedVersement(versement)}
-                            className="px-3 py-1 bg-green-600 rounded hover:bg-green-700">Afficher</button>
+                            className="px-3 py-1  bg-green-500 rounded  hover:bg-green-600">Afficher</button>
                            </div>
                         </td>
                     </tr>

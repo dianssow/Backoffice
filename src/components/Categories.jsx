@@ -278,12 +278,21 @@ function Categories() {
                { currentCategories.map((cat, index) => (
                     <tr  key={cat.id || index}>
                         <td className="border items-center justify-center border-gray-200 p-1">{startIndex + index + 1}</td>
-                        <td className="border flex justify-center  border-gray-200 p-2">
-                           <img
-                            src={`${import.meta.env.VITE_API_URL}/${cat.image}`}
-                            className="w-11 h-11 rounded-4xl object-cover"
-                           />
-                        </td>
+                       <td className="border flex justify-center border-gray-200 p-2">
+                          {cat.image ? (
+                              <img
+                                  src={
+                                      cat.image.startsWith("data:") 
+                                      ? cat.image 
+                                      : `${import.meta.env.VITE_API_URL}/${cat.image}`
+                                  }
+                                  alt="categorie"
+                                  className="w-11 h-11 rounded-4xl object-cover"
+                              />
+                          ) : (
+                              "-"
+                          )}
+                      </td>
                         <td className="border border-gray-200 p-2">{cat.categoryName}</td>
                         <td className="border border-gray-200 p-2" >
                             <div className="flex flex-wrap gap-3 justify-end">
@@ -341,11 +350,21 @@ function Categories() {
                   {currentProducts.map((product, index) => (
          <tr  key={product.id || index}>
                         <td className="border items-center justify-center border-gray-200 p-1">{productStartIndex + index + 1}</td>
-                        <td className="border border-gray-200 flex justify-center p-2">
-                            {product.image ? (  <img src={`${import.meta.env.VITE_API_URL}/${product.image}`} alt={product.name} className="w-11 h-11 rounded-4xl justify-center object-cover" /> ) : ("-") }
-                                
-                            
-                        </td>
+                       <td className="border flex justify-center border-gray-200 p-2">
+                          {product.image ? (
+                              <img 
+                                  src={
+                                      product.image.startsWith('data:') 
+                                      ? product.image 
+                                      : `${import.meta.env.VITE_API_URL}/${product.image}`
+                                  } 
+                                  alt={product.name} 
+                                  className="w-11 h-10 rounded-4xl object-cover" 
+                              />
+                          ) : (
+                              "-"
+                          )}
+                      </td>
                         <td className="border border-gray-200 p-2">{product.name}</td>
                         <td className="border border-gray-200 p-2">
                             <span>
