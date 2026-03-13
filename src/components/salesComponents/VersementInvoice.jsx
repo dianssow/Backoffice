@@ -2,6 +2,8 @@ function VersementInvoice({ versement,customer, onClose, }) {
 
   if (!versement) return null
 
+  const customerInfo = versement.customer || customer || {}
+
   const formatDate= (dateString) => {
     const date = new Date(dateString)
     return date.toLocaleString("fr-FR", {
@@ -17,8 +19,8 @@ function VersementInvoice({ versement,customer, onClose, }) {
         <div className="flex justify-between items-start mb-12 border-b border-gray-400 pb-4">
           <div>
             <h1 className="text-4xl text-slate-800 font-serif">GAP DISTRIBUTION</h1>
-            <p className=" font-medium">COSA <br/> COMMUNE DE LAMBANYI</p>
-            <p>00224 623 75 23 44</p>
+            <p className=" font-medium">COSA <br/> COMMUNE DE LAMBANYI</p>     
+            <p>00224 621 60 77 83</p>
          </div>      
         </div>
           <div className="flex justify-between  items-start mb-8">
@@ -30,9 +32,9 @@ function VersementInvoice({ versement,customer, onClose, }) {
             <p>N°: {versement.versementNumber} </p>
         </div>
           <div className="border  border-gray-300 rounded-md p-4  w-1/2 bg-gray-50">
-            <p className="text-2xl font-extrabold">{versement.customer?.name || "-"}</p>
-            <p><strong>Adresse :</strong> {versement.customer?.address || "-"}</p>
-            <p><strong>Téléphone :</strong> {versement.customer?.number || "-"}</p>
+            <p className="text-2xl font-extrabold">{customerInfo?.name || "-"}</p>
+            <p><strong>Adresse :</strong> {customerInfo?.address || "-"}</p>
+            <p><strong>Téléphone :</strong> {customerInfo?.number || "-"}</p>
           </div>
           </div>
 
@@ -53,16 +55,16 @@ function VersementInvoice({ versement,customer, onClose, }) {
               <td className="border-r border-gray-400 p-2 ">{versement.amount.toLocaleString("fr-FR")} GNF</td>
               <td className="border-r border-gray-400 p-2 w-2/4 ">{versement.motif || "--"}</td>
             </tr>
-          </tbody>
+          </tbody> 
         </table>
           
 
-          <div className="mt-6">
+          <div className="mt-6" >
             <h4 className="text-lg font-semibold text-gray-700">Nouveau Solde:</h4>
             <p className="text-2xl font-bold text-blue-800 mt-1">
               {versement?.balanceAfter?.toLocaleString("fr-FR")} GNF
             </p>
-          </div>
+          </div> 
         </div>
 
         <div className="flex bg-white justify-between mt-6  bottom-0 py-4 no-print">

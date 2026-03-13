@@ -369,7 +369,7 @@ const token = useSelector((state) => state.loginPage.token);
                 />
                 <input 
                  name="number"
-                  value={formData.number}
+                  value={formData.number}    
                   onChange={handleChange}
                  type="Number"
                   placeholder="Numéro de TEL"

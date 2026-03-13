@@ -10,6 +10,7 @@ import Users from './components/Users'
 import Sales from './components/salesComponents/Sales'
 import CashManagement from './components/cashManagement/CashManagement'
 import Versement from './components/salesComponents/Versement'
+import Marketing from './components/Marketing'
 
 
 function App() {
@@ -52,6 +53,10 @@ function App() {
        <Route 
        path="users"
        element={ <Users /> }
+       />
+       <Route 
+       path="marketing"
+       element={ <Marketing /> }
        />
        <Route 
        path="logout"

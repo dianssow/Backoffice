@@ -113,7 +113,7 @@ const totalPagesVersements = Math.ceil(versements.length / limit)
          customer={customer}
          onClose={() => setSelectedSale(null)} />
       )}
-  if(selectedVersement) {
+  if(selectedVersement) {              
         return (
         <VersementInvoice
          versement={selectedVersement} 
@@ -219,7 +219,7 @@ const totalPagesVersements = Math.ceil(versements.length / limit)
           <table className=" w-full border-collapse border border-gray-300 ">
                 <thead>
                     <tr className="bg-gray-200">
-                        <th  className="w-2 border  p-2">N°</th>
+                        <th  className="w-2 border  p-2">N°</th> 
                         <th className=" border  p-2">Date</th>
                         <th className=" border  p-2">Montant</th>
                         <th className="  border  p-2">Motif</th>

@@ -16,16 +16,16 @@ function Invoice({ sale,customer, onClose }) {
         <div className="flex justify-between items-start mb-12 border-b border-gray-400 pb-4">
           <div>
             <h1 className="text-4xl text-slate-800 font-serif">GAP DISTRIBUTION</h1>
-            <p className=" font-medium">COSA <br/> COMMUNE DE LAMBANYI</p>
-            <p>00224 623 75 23 44</p>
+            <p className=" font-medium">Cosa <br/> COMMUNE DE LAMBANYI</p>
+            <p>00224 621 60 77 83</p>
          </div>
-                       {/* Facture et infos client */}
+                       {/* Facture et infos client */}     
         </div>
           <div className="flex justify-between  items-start mb-8">
            <div className="text-center">
             <h2 className="text-3xl font-bold uppercase">FACTURE</h2>
             <p className="text-gray-600 mt-2">
-            Type : {sale.paymentType} | Date : {formatDateTime(sale.date)}
+            Type : {sale.paymentType} | Date : {formatDateTime(sale.createdAt)}
             </p>
             <p>N°: {sale.invoiceNumber} </p>
         </div>

@@ -10,11 +10,12 @@ function Sidebar() {
         {name: "Cash Management",path:"/dashboard/cashManagement",icon: <FaCashRegister />, isParent: false},
         {name: "Utilisateurs",path:"/dashboard/users",icon: <FaUser />, isParent: false},
         {name: "Categories",path:"/dashboard/categories",icon: <FaTable  />, isParent: false},
-        {name: "Deconnexion",path:"/dashboard/logout",icon: <FaSignOutAlt />, isParent: false}
+        {name: "Fournisseurs",path:"/dashboard/marketing",icon: <FaSignOutAlt />, isParent: false},
+        {name: "Deconnexion",path:"/dashboard/logout",icon: <FaSignOutAlt />, isParent: false},
     ]
 
   return (
-    <div className=" flex flex-col h-screen p-3 bg-slate-800 text-white w-16 md:w-64 fixed">
+    <div className=" flex flex-col h-screen p-3 bg-slate-800 text-white w-16 md:w-64 fixed ">
         <div className="h-16 flex flex-items justify-center">
             <span className="hidden md:block text-xl font-serif tracking-wide">GAP DISTRIBUTION</span>
             <span className="md:hidden text-xl font-bold">GAPD</span>
