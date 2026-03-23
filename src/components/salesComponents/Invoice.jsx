@@ -6,7 +6,7 @@ function Invoice({ sale,customer, onClose }) {
     return date.toLocaleString("fr-FR", {
       dateStyle: "short",
       timeStyle: "short",
-    })
+    })  
   }
 
   return (

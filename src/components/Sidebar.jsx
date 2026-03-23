@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom"
-import {FaHome,FaTable,FaBox,FaCashRegister,FaHandHoldingUsd,FaShoppingCart ,FaUsers,FaUser,FaSignOutAlt} from "react-icons/fa"
+import {FaHome,FaTable,FaBox,FaCashRegister,FaHandHoldingUsd,FaShoppingCart ,FaUsers,FaUser,FaSignOutAlt, FaTruck} from "react-icons/fa"
 function Sidebar() {
 
     const menuItems = [
@@ -10,7 +10,7 @@ function Sidebar() {
         {name: "Cash Management",path:"/dashboard/cashManagement",icon: <FaCashRegister />, isParent: false},
         {name: "Utilisateurs",path:"/dashboard/users",icon: <FaUser />, isParent: false},
         {name: "Categories",path:"/dashboard/categories",icon: <FaTable  />, isParent: false},
-        {name: "Fournisseurs",path:"/dashboard/marketing",icon: <FaSignOutAlt />, isParent: false},
+        {name: "Fournisseurs",path:"/dashboard/supplier",icon: <FaTruck />, isParent: false},
         {name: "Deconnexion",path:"/dashboard/logout",icon: <FaSignOutAlt />, isParent: false},
     ]
 

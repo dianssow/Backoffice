@@ -10,7 +10,7 @@ import Users from './components/Users'
 import Sales from './components/salesComponents/Sales'
 import CashManagement from './components/cashManagement/CashManagement'
 import Versement from './components/salesComponents/Versement'
-import Marketing from './components/Marketing'
+import Supplier from './components/suppliersComponents/Supplier'
 
 
 function App() {
@@ -55,8 +55,8 @@ function App() {
        element={ <Users /> }
        />
        <Route 
-       path="marketing"
-       element={ <Marketing /> }
+       path="supplier"
+       element={ <Supplier /> }
        />
        <Route 
        path="logout"
