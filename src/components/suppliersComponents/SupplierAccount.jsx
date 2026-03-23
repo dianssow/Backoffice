@@ -311,6 +311,7 @@ const handleEditVersement = (versement) => {
 const handleEditVersementSubmit = async (e) => {
   e.preventDefault()
   try {
+
     const response = await api.put(
       `/api/supplier/${supplier.id}/versement/${selectedVersementEdit.id}`,
       {
@@ -325,6 +326,7 @@ const handleEditVersementSubmit = async (e) => {
         } 
       }
     )
+    
     if (response.data.success) {
       setMessage("Versement modifié avec succès")
       setMessageType("success")
@@ -360,6 +362,50 @@ const handleDeleteVersement = async () => {
     setConfirmDeleteVersement(false)
     setItemToDelete(null)
   }
+}
+
+const closeAddVersementModal = () => {
+  setAddVersementModal(false)
+  setVersementFormData({
+    versementAmount: "",
+    versementDate: "",
+    payerName: "",
+    motif: "",
+    versementType: ""
+  })
+}
+
+const closeAddInvoiceModal = () => {
+  setAddInvoiceModal(false)
+  setInvoiceFormData({
+    invoiceAmount: "",
+    invoiceDate: "",
+    dueDate: "",
+    depositAmount: ""
+  })
+}
+
+const closeEditVersementModal = () => {
+  setEditVersementModal(false)
+  setSelectedVersementEdit(null)
+  setVersementFormData({
+    versementAmount: "",
+    versementDate: "",
+    payerName: "",
+    motif: "",
+    versementType: ""
+  })
+}
+
+const closeEditInvoiceModal = () => {
+  setEditInvoiceModal(false)
+  setSelectedInvoiceEdit(null)
+  setInvoiceFormData({
+    invoiceAmount: "",
+    invoiceDate: "",
+    dueDate: "",
+    depositAmount: ""
+  })
 }
 
   return (
@@ -487,7 +533,16 @@ const handleDeleteVersement = async () => {
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-xl font-semibold">Historique des versements</h3>
             <button
-              onClick={() => setAddVersementModal(true)}
+             onClick={() => {
+                setVersementFormData({
+                  versementAmount: "",
+                  versementDate: "",
+                  payerName: "",
+                  motif: "",
+                  versementType: ""
+                })
+                setAddVersementModal(true)
+              }}
               className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
             >
               + Ajouter un versement
@@ -559,7 +614,7 @@ const handleDeleteVersement = async () => {
             <form className="flex flex-col gap-4" onSubmit={handleInvoiceSubmit}>
               <button
                 type="button"
-                onClick={() => setAddInvoiceModal(false)}
+                onClick={closeAddInvoiceModal}
                 className="text-red-500 font-bold absolute top-4 right-4 text-lg cursor-pointer"
               >
                 X
@@ -609,7 +664,7 @@ const handleDeleteVersement = async () => {
               <div className="flex justify-end space-x-2 mt-4">
                 <button 
                   type="button"
-                  onClick={() => setAddInvoiceModal(false)}
+                 onClick={closeAddInvoiceModal}
                   className="px-4 py-2 bg-gray-300 text-black rounded hover:bg-gray-400"
                 >
                   Annuler
@@ -639,7 +694,7 @@ const handleDeleteVersement = async () => {
             <form className="flex flex-col gap-4" onSubmit={handleVersementSubmit}>
               <button
                 type="button"
-                onClick={() => setAddVersementModal(false)}
+                onClick={closeAddVersementModal}
                 className="text-red-500 font-bold absolute top-4 right-4 text-lg cursor-pointer"
               >
                 X
@@ -682,7 +737,7 @@ const handleDeleteVersement = async () => {
                   <option value=""> Type de paiement </option>
                   <option value="especes">Espèces</option>
                   <option value="cheque">Chèque</option>
-                  <option value="cheque">Orange Money</option>
+                  <option value="orangemoney">Orange Money</option>
                   <option value="devise">Devise</option>
               </select>
               
@@ -698,7 +753,7 @@ const handleDeleteVersement = async () => {
               <div className="flex justify-end space-x-2 mt-4">
                 <button 
                   type="button"
-                  onClick={() => setAddVersementModal(false)}
+                  onClick={closeAddVersementModal}
                   className="px-4 py-2 bg-gray-300 text-black rounded hover:bg-gray-400"
                 >
                   Annuler
@@ -744,7 +799,7 @@ const handleDeleteVersement = async () => {
   <div className="fixed top-0 left-0 w-full h-full bg-slate-700/40 flex justify-center items-center z-50">
     <div className="bg-slate-800 text-white p-6 rounded-lg w-1/3 relative">
       <h1 className="text-xl uppercase text-center text-white font-bold mb-4">Modifier la Facture</h1>
-      <button type="button" onClick={() => setEditInvoiceModal(false)}
+      <button type="button" onClick={closeEditInvoiceModal} 
         className="text-red-500 font-bold absolute top-4 right-4 text-lg">X</button>
       <form className="flex  flex-col gap-4" onSubmit={handleEditInvoiceSubmit}>
         <input name="invoiceAmount" value={invoiceFormData.invoiceAmount} onChange={handleInvoiceChange}
@@ -760,7 +815,7 @@ const handleDeleteVersement = async () => {
         <input name="depositAmount" value={invoiceFormData.depositAmount} onChange={handleInvoiceChange}
           type="number" placeholder="Avance" className=" border p-2 rounded px-4" />
         <div className="flex justify-end gap-2 mt-4">
-          <button type="button" onClick={() => setEditInvoiceModal(false)}
+          <button type="button" onClick={closeEditInvoiceModal}
             className="px-4 py-2 bg-gray-300  rounded">Annuler</button>
           <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Confirmer</button>
         </div>
@@ -773,7 +828,7 @@ const handleDeleteVersement = async () => {
   <div className="fixed top-0 left-0 w-full h-full bg-slate-700/40  flex justify-center items-center z-50">
     <div className="bg-slate-800 text-white p-6 rounded-lg w-1/3 relative">
       <h1 className="text-xl uppercase text-center text-white font-bold mb-4">Modifier le Versement</h1>
-      <button type="button" onClick={() => setEditVersementModal(false)}
+      <button type="button" onClick={closeEditVersementModal}
         className="text-red-500 font-bold absolute top-4 right-4 text-lg">X</button>
       <form className="flex flex-col gap-4" onSubmit={handleEditVersementSubmit}>
         <input 
@@ -800,13 +855,13 @@ const handleDeleteVersement = async () => {
                   <option value="">Type de paiement</option>
                   <option value="especes">Espèces</option>
                   <option value="cheque">Chèque</option>
-                  <option value="cheque">Orange Money</option>
+                  <option value="orangemoney">Orange Money</option>
                   <option value="devise">Devise</option>
               </select> 
         <textarea name="motif" value={versementFormData.motif} onChange={handleVersementChange}
           placeholder="Motif" rows={3} className="text-white border p-2 rounded px-4 resize-none" />
         <div className="flex justify-end gap-2 mt-4">
-          <button type="button" onClick={() => setEditVersementModal(false)}
+          <button type="button" onClick={closeEditVersementModal}
             className="px-4 py-2 bg-gray-300 text-black rounded">Annuler</button>
           <button type="submit" className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">Confirmer</button>
         </div>

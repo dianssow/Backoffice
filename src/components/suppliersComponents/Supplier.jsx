@@ -306,7 +306,7 @@ const token = useSelector((state) => state.loginPage.token);
                         <td className="border border-gray-200 p-2 text-center">
                         {supplier.dueDate ? (
                             <span className={`font-semibold ${
-                            new Date(supplier.dueDate) < new Date() ? 'text-red-600' : 'text-orange-600'
+                            new Date(supplier.dueDate) < new Date() ? 'text-red-600' : 'text-green-500'
                             }`}>
                             {formatDate(supplier.dueDate)}
                             </span>
