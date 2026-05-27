@@ -24,6 +24,10 @@ function Customers() {
       address:"",   
       birth:""
     })   
+       const [balancesSummary, setBalancesSummary] = useState({
+        totalBalance: 0,
+        totalDueOnly: 0
+     })
           //  Pour affichage CustomerAccount(Visionner) 
   const[selectedClient, setSelectedClient] = useState(null)
 
@@ -78,6 +82,7 @@ function Customers() {
 }  
 
 const token = useSelector((state) => state.loginPage.token);
+
     const fetchCustomers = async () => {
         try {
              const response = await api.get("/api/customer", {
@@ -94,8 +99,23 @@ const token = useSelector((state) => state.loginPage.token);
         }
 
     }
+
+    const fetchBalancesSummary = async () => {
+  try {
+    const res = await api.get("/api/customer/balances/summary")
+    setBalancesSummary({
+      totalBalance: res.data.totalBalance || 0,
+      totalDueOnly: res.data.totalDueOnly || 0
+    })
+    console.log(res);
+    
+  } catch (error) {
+    console.error("Erreur récupération total balances :", error)
+  }
+}
     useEffect (() => {
-    fetchCustomers()
+    fetchCustomers(),
+    fetchBalancesSummary()
  }, [])
     
 
@@ -235,6 +255,12 @@ const token = useSelector((state) => state.loginPage.token);
         ) 
      }    
 
+
+   
+  
+
+
+
   return (
     <div className="w-full h-full flex flex-col gap-4 p-4">
       {!selectedClient ? (
@@ -245,6 +271,10 @@ const token = useSelector((state) => state.loginPage.token);
             onChange={handleSearch}
             className="border p-1 bg-white rounded px-4"
             type="text" placeholder="Rechercher" />
+            <div>
+            <h3>Total balance clients : {balancesSummary.totalBalance.toLocaleString("fr-FR")} GNF</h3>
+            <h4>Total que les clients doivent : <span className="text-green-500">{balancesSummary.totalDueOnly.toLocaleString("fr-FR")} GNF</span></h4>
+            </div>
             <button
             onClick={() => setAddEditModal(true)}
             className="px-3 py-2 bg-blue-600 text-black rounded-lg cursor-pointer hover:bg-blue-700 transition">New Client</button>

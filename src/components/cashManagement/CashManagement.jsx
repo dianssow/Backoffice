@@ -378,7 +378,7 @@ const toggleDetails = async (shiftId) => {
                     <th className="border px-2 py-1">Méthode</th>
                     <th className="border px-2 py-1">Caissier</th>
                     <th className="border px-2 py-1">Date</th>
-                  </tr>
+                  </tr> 
                 </thead>
                 <tbody>
                   { expandedDetails?.movements?.length > 0 ? (

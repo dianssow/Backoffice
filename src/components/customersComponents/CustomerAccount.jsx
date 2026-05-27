@@ -3,6 +3,7 @@ import api from "../../api"
 import Invoice from "../salesComponents/Invoice"
 import VersementInvoice from "../salesComponents/VersementInvoice"  
 import Pagination from "../Pagination"
+import CustomerStatement from "./CustomerStatement"
 
 function CustomerAccount({ customer, onClose }) {
   const [sales, setSales] = useState([]) 
@@ -14,7 +15,8 @@ function CustomerAccount({ customer, onClose }) {
   const [salesPage, setSalesPage] = useState(1)
   const [versementsPage, setVersementsPage] = useState(1)
   const [limit, setLimit] = useState(8)
-
+  const [selectedStatement, setSelectedStatement] = useState(null)
+  const [loadingStatement, setLoadingStatement] = useState(false)
 
  const formatDate = (dateString) => {
   if (!dateString) return ""
@@ -34,15 +36,26 @@ function CustomerAccount({ customer, onClose }) {
 const totalPagesSales = Math.ceil(sales.length / limit)
 const totalPagesVersements = Math.ceil(versements.length / limit)
 
-      const currentSales = sales
-    .slice()
-    .sort((a, b) => new Date(b.date) - new Date(a.date))
-    .slice((salesPage - 1) * limit, salesPage * limit)
+  //     const currentSales = sales
+  //   .slice()
+  //   .sort((a, b) => new Date(b.date) - new Date(a.date))
+  //   .slice((salesPage - 1) * limit, salesPage * limit)
 
-  const currentVersements = versements
-    .slice()
-    .sort((a, b) => new Date(b.date) - new Date(a.date))
-    .slice((versementsPage - 1) * limit, versementsPage * limit)
+  // const currentVersements = versements
+  //   .slice()
+  //   .sort((a, b) => new Date(b.date) - new Date(a.date))
+  //   .slice((versementsPage - 1) * limit, versementsPage * limit)
+
+
+    const currentSales = sales
+  .slice()
+  .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+  .slice((salesPage - 1) * limit, salesPage * limit)
+
+const currentVersements = versements
+  .slice()
+  .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+  .slice((versementsPage - 1) * limit, versementsPage * limit)
 
   // Reset page on tab switch
   useEffect(() => {
@@ -100,6 +113,19 @@ const totalPagesVersements = Math.ceil(versements.length / limit)
      }, [customer]) 
 
      
+     const handleOpenStatement = async () => {
+ 
+ try {
+   setLoadingStatement(true)
+   const response = await api.get(`/api/customer/${customer.id}/statement`)
+   setSelectedStatement(response.data)
+   
+ } catch (error) {
+   console.error("Erreur récupération relevé client :", error)
+ } finally {
+   setLoadingStatement(false)
+ }
+ }
    
 
     
@@ -123,6 +149,18 @@ const totalPagesVersements = Math.ceil(versements.length / limit)
       )}
 
 
+
+if (selectedStatement) {
+  return (
+    <CustomerStatement
+      statement={selectedStatement}
+      customer={customer}
+      onClose={() => setSelectedStatement(null)}
+    />
+  )
+}
+
+
   return (
    <>
     <div className="p-6 bg-white rounded shadow  ">
@@ -140,6 +178,15 @@ const totalPagesVersements = Math.ceil(versements.length / limit)
       <p className="mb-4  text-green-600 font-bold">
         <strong>Balance du compte :</strong> {balance.toLocaleString('fr-FR')}
       </p>
+
+      <button
+    onClick={handleOpenStatement}
+    disabled={loadingStatement}
+    className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50"
+  >
+    {loadingStatement ? "Chargement..." : "Relevé PDF"}
+  </button>
+
       </div>
 
       <div>
